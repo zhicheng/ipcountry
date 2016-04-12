@@ -31,10 +31,10 @@ def make_app():
 	return tornado.web.Application([
 		(r"/", WebHandler),
 		(r"/api", APIHandler),
-	], debug=True, xheaders=True)
+	], debug=True)
 
 if __name__ == "__main__":
 	tornado.log.enable_pretty_logging()
 	app = make_app()
-	app.listen(9000)
+	app.listen(9000, xheaders=True)
 	tornado.ioloop.IOLoop.current().start()
