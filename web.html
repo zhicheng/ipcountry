@@ -1,0 +1,103 @@
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>IP Country</title>
+<meta name="description" content="IP Country Project" />
+<script type='text/javascript' src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+	google.charts.load('current', {'packages': ['geochart']});
+	google.charts.setOnLoadCallback(drawRegionsMap);
+
+	function drawRegionsMap() {
+		var data = google.visualization.arrayToDataTable([['Country']{% if cc %},['{{cc}}']{% end %}]);
+		var options = {};
+
+		var chart = new google.visualization.GeoChart(document.getElementById('map'));
+
+		chart.draw(data, options);
+	}
+</script>
+<style>
+
+html
+body {
+	font-size: 16px;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 1em;
+}
+
+.title, .ip, .cc {
+	text-align: center;
+}
+
+.map-container {
+	width: 800px;
+	height: 450px;
+	padding: 1em;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: 0 auto;
+}
+
+.query {
+	text-align: center;
+	padding: 1em;
+}
+
+.query form {
+	display: inline;
+}
+
+.query .cc, .query form input, .query form button {
+	font-size: 18px;
+}
+
+.query .cc {
+	color: green;
+	background-color: #fff8bf;
+	padding: 4px 5px;
+	border: 1px solid #ccc;
+	margin: 0 1em;
+}
+
+.copyright {
+	color: #999;
+	font-size: 13px;
+	text-align: center;
+	margin: 1em;
+}
+
+</style>
+
+</head>
+
+<body>
+<div class="container">
+	<h1 class="title">IP Country</h1>
+	<div class="query">
+		<form>
+			<input type="text" name="ip" value="{{ip}}">
+			<button type="submit">Submit</button>
+		</form>
+		<span class="cc">{% if cc %}{{cc}}{% else %}{{'NOT FOUND'}}{% end %}</span>
+		<a href="{{request.protocol}}://{{request.host}}/api?ip={{url_escape(ip)}}&callback=_">API</a>
+	</div>
+	<div class="map-container">
+		<div id="map" style="width:800px;height:450px;"></div>
+	</div>
+	<div class="copyright">
+		IP Country is an opensource project, <a href="https://github.com/ipcountry">github</a>.
+	</div>
+</div>
+</body>
+</html>
