@@ -31,7 +31,7 @@ def make_app():
 	return tornado.web.Application([
 		(r"/", WebHandler),
 		(r"/api", APIHandler),
-	], {'debug': True})
+	], debug=True, xheaders=True)
 
 if __name__ == "__main__":
 	tornado.log.enable_pretty_logging()
