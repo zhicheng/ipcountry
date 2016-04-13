@@ -247,7 +247,7 @@ ipcountry_lookup(struct ipcountry *ipcountry, const char *addr, char cc[2])
 
 		record = ipcountry->ipv4records + i;
 		if (ntohl(record->start) > ntohl(key.start) ||
-		    (ntohl(record->start) + ntohl(record->value)) < ntohl(key.start))
+		    (ntohl(record->start) + ntohl(record->value)) <= ntohl(key.start))
 		{
 			goto err;
 		}
@@ -288,7 +288,7 @@ ipcountry_lookup(struct ipcountry *ipcountry, const char *addr, char cc[2])
 		uint128_from_uint8(&value, 1);
 		uint128_shl(&value, 128 - ntohl(record->value));
 		uint128_add128(&start, &value);
-		if (uint128_cmp128(&start, &key128) == -1) {
+		if (uint128_cmp128(&start, &key128) <= 0) {
 			goto err;
 		}
 
